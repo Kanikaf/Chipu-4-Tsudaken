@@ -6,293 +6,88 @@
 <title>ちぷAI 管理 - キャラ設定＆あるある投稿</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Segoe UI', sans-serif;
     background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 50%, #fdf4ff 100%);
     min-height: 100vh;
     padding: 20px 16px 40px;
   }
-
-  .container {
-    max-width: 540px;
-    margin: 0 auto;
-  }
-
-  /* ヘッダー */
-  .page-header {
-    text-align: center;
-    margin-bottom: 28px;
-  }
-
-  .page-header h1 {
-    font-size: 22px;
-    font-weight: 700;
-    color: #4a3f6b;
-    margin-bottom: 6px;
-  }
-
-  .page-header p {
-    font-size: 13px;
-    color: #9c82b5;
-  }
-
-  /* カード */
-  .card {
-    background: rgba(255,255,255,0.88);
-    backdrop-filter: blur(12px);
-    border-radius: 20px;
-    padding: 22px 22px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 24px rgba(167,139,250,0.1);
-  }
-
-  .card-title {
-    font-size: 15px;
-    font-weight: 700;
-    color: #4a3f6b;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .badge {
-    font-size: 11px;
-    background: #f3e8ff;
-    color: #7c3aed;
-    padding: 2px 8px;
-    border-radius: 20px;
-    font-weight: 500;
-  }
-
-  /* フォーム */
-  label {
-    display: block;
-    font-size: 12px;
-    font-weight: 600;
-    color: #7c6fa0;
-    margin-bottom: 5px;
-    margin-top: 14px;
-  }
-
+  .container { max-width: 540px; margin: 0 auto; }
+  .page-header { text-align: center; margin-bottom: 28px; }
+  .page-header h1 { font-size: 22px; font-weight: 700; color: #4a3f6b; margin-bottom: 6px; }
+  .page-header p { font-size: 13px; color: #9c82b5; }
+  .card { background: rgba(255,255,255,0.88); backdrop-filter: blur(12px); border-radius: 20px; padding: 22px; margin-bottom: 20px; box-shadow: 0 4px 24px rgba(167,139,250,0.1); }
+  .card-title { font-size: 15px; font-weight: 700; color: #4a3f6b; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .badge { font-size: 11px; background: #f3e8ff; color: #7c3aed; padding: 2px 8px; border-radius: 20px; font-weight: 500; }
+  label { display: block; font-size: 12px; font-weight: 600; color: #7c6fa0; margin-bottom: 5px; margin-top: 14px; }
   label:first-of-type { margin-top: 0; }
-
-  input[type="text"], textarea, select {
-    width: 100%;
-    border: 1.5px solid #e9d5ff;
-    border-radius: 12px;
-    padding: 10px 14px;
-    font-size: 14px;
-    font-family: inherit;
-    outline: none;
-    color: #3d3256;
-    background: #fdf4ff;
-    transition: border-color 0.2s;
-  }
-
-  input[type="text"]:focus,
-  textarea:focus,
-  select:focus {
-    border-color: #a78bfa;
-    background: white;
-  }
-
+  input[type="text"], textarea, select { width: 100%; border: 1.5px solid #e9d5ff; border-radius: 12px; padding: 10px 14px; font-size: 14px; font-family: inherit; outline: none; color: #3d3256; background: #fdf4ff; transition: border-color 0.2s; }
+  input[type="text"]:focus, textarea:focus, select:focus { border-color: #a78bfa; background: white; }
   textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
-
-  /* ボタン */
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 11px 22px;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: 600;
-    font-family: inherit;
-    cursor: pointer;
-    border: none;
-    transition: transform 0.15s, box-shadow 0.15s;
-  }
-
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 11px 22px; border-radius: 12px; font-size: 14px; font-weight: 600; font-family: inherit; cursor: pointer; border: none; transition: transform 0.15s; }
   .btn:hover { transform: translateY(-1px); }
   .btn:active { transform: scale(0.97); }
-
-  .btn-primary {
-    background: linear-gradient(135deg, #a78bfa, #818cf8);
-    color: white;
-    box-shadow: 0 4px 12px rgba(167,139,250,0.35);
-    width: 100%;
-    margin-top: 16px;
-  }
-
-  .btn-success {
-    background: linear-gradient(135deg, #34d399, #10b981);
-    color: white;
-    box-shadow: 0 4px 12px rgba(52,211,153,0.3);
-    width: 100%;
-    margin-top: 16px;
-  }
-
-  /* トースト通知 */
-  .toast {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%) translateY(60px);
-    background: #3d3256;
-    color: white;
-    padding: 12px 24px;
-    border-radius: 30px;
-    font-size: 14px;
-    font-weight: 500;
-    opacity: 0;
-    transition: all 0.3s;
-    z-index: 200;
-    white-space: nowrap;
-  }
-
-  .toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-
-  /* エピソードリスト */
-  .episode-list {
-    margin-top: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .episode-item {
-    background: #fdf4ff;
-    border: 1px solid #e9d5ff;
-    border-radius: 12px;
-    padding: 10px 14px;
-    font-size: 13px;
-    color: #4a3f6b;
-    line-height: 1.5;
-    display: flex;
-    gap: 8px;
-  }
-
-  .episode-item span {
-    color: #9c82b5;
-    font-size: 11px;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  /* タブ風ナビ */
-  .tab-nav {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-  }
-
-  .tab-btn {
-    flex: 1;
-    padding: 10px;
-    border-radius: 12px;
-    border: 1.5px solid #e9d5ff;
-    background: white;
-    font-size: 13px;
-    font-weight: 600;
-    color: #9c82b5;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all 0.2s;
-  }
-
-  .tab-btn.active {
-    background: linear-gradient(135deg, #a78bfa, #818cf8);
-    color: white;
-    border-color: transparent;
-  }
-
+  .btn-primary { background: linear-gradient(135deg, #a78bfa, #818cf8); color: white; box-shadow: 0 4px 12px rgba(167,139,250,0.35); width: 100%; margin-top: 16px; }
+  .btn-success { background: linear-gradient(135deg, #34d399, #10b981); color: white; box-shadow: 0 4px 12px rgba(52,211,153,0.3); width: 100%; margin-top: 16px; }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(60px); background: #3d3256; color: white; padding: 12px 24px; border-radius: 30px; font-size: 14px; font-weight: 500; opacity: 0; transition: all 0.3s; z-index: 200; white-space: nowrap; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  .episode-list { margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
+  .episode-item { background: #fdf4ff; border: 1px solid #e9d5ff; border-radius: 12px; padding: 10px 14px; font-size: 13px; color: #4a3f6b; line-height: 1.5; display: flex; gap: 8px; }
+  .episode-item span { color: #9c82b5; font-size: 11px; flex-shrink: 0; margin-top: 2px; }
+  .tab-nav { display: flex; gap: 8px; margin-bottom: 20px; }
+  .tab-btn { flex: 1; padding: 10px; border-radius: 12px; border: 1.5px solid #e9d5ff; background: white; font-size: 13px; font-weight: 600; color: #9c82b5; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+  .tab-btn.active { background: linear-gradient(135deg, #a78bfa, #818cf8); color: white; border-color: transparent; }
   .tab-content { display: none; }
   .tab-content.show { display: block; }
-
-  /* トップリンク */
-  .top-link {
-    text-align: center;
-    margin-top: 16px;
-    font-size: 13px;
-    color: #9c82b5;
-  }
-
-  .top-link a {
-    color: #a78bfa;
-    text-decoration: none;
-    font-weight: 600;
-  }
+  .top-link { text-align: center; margin-top: 16px; font-size: 13px; color: #9c82b5; }
+  .top-link a { color: #a78bfa; text-decoration: none; font-weight: 600; }
 </style>
 </head>
 <body>
-
 <div class="container">
-  <!-- ヘッダー -->
   <div class="page-header">
     <div style="font-size:40px; margin-bottom:8px;">⚙️</div>
     <h1>ちぷAI 管理ページ</h1>
     <p>連盟員のみんながちぷAIを育てる場所</p>
   </div>
-
-  <!-- タブ -->
   <div class="tab-nav">
     <button class="tab-btn active" onclick="switchTab('char')">🎭 キャラ設定</button>
     <button class="tab-btn" onclick="switchTab('episode')">📖 あるある投稿</button>
   </div>
-
-  <!-- キャラ設定タブ -->
   <div class="tab-content show" id="tab-char">
     <div class="card">
       <div class="card-title">🎭 AIキャラクター設定 <span class="badge">みんなで決める</span></div>
-
       <label>キャラクターの名前</label>
-      <input type="text" id="charName" placeholder="例：ハル" maxlength="10">
-
+      <input type="text" id="charName" placeholder="例：津田健次郎" maxlength="20">
       <label>性格・タイプ</label>
       <select id="charType" onchange="updatePersonality()">
-        <option value="gentle_brother">😊 優しいお兄さん系（デフォルト）</option>
-        <option value="cool_caring">😎 クールだけど気にかけてくれる系</option>
+        <option value="cool_caring">😎 クールだけど気にかけてくれる系（デフォルト）</option>
+        <option value="gentle_brother">😊 優しいお兄さん系</option>
         <option value="cheerful">🌞 明るくてテンション高い系</option>
         <option value="reliable">💪 頼りになる系</option>
         <option value="custom">✏️ カスタム（自分で入力）</option>
       </select>
-
       <label>性格の詳細説明</label>
       <textarea id="charPersonality" placeholder="AIキャラクターの性格を詳しく設定してください"></textarea>
-
       <label>口調・話し方</label>
-      <textarea id="charTone" placeholder="例：穏やかで温かい。少しユーモアもあるけど押しつけがましくない。" style="min-height:60px;"></textarea>
-
+      <textarea id="charTone" placeholder="例：短くシンプルだが温かみのある言葉遣い。" style="min-height:60px;"></textarea>
       <label>その他・特記事項</label>
       <textarea id="charExtra" placeholder="例：ちぷが落ち込んでいそうなときは特に優しくする。" style="min-height:60px;"></textarea>
-
       <button class="btn btn-primary" onclick="saveCharSettings()">💾 キャラ設定を保存</button>
     </div>
   </div>
-
-  <!-- あるある投稿タブ -->
   <div class="tab-content" id="tab-episode">
     <div class="card">
       <div class="card-title">📖 ちぷあるある・エピソード投稿</div>
       <p style="font-size:13px; color:#9c82b5; margin-bottom:16px; line-height:1.6;">
         ちぷのことをAIに教えてあげよう！<br>エピソードが増えるほどAIがちぷを知るようになります。
       </p>
-
       <label>投稿者名（ニックネームOK）</label>
       <input type="text" id="posterName" placeholder="ニックネームを入力" maxlength="20">
-
       <label>ちぷについてのエピソード・あるある</label>
       <textarea id="episodeText" placeholder="例：ゴム手袋をガスコンロに落として五徳にゴムを溶かしてしまった話" style="min-height:100px;"></textarea>
-
       <button class="btn btn-success" onclick="postEpisode()">✨ 投稿する</button>
     </div>
-
     <div class="card">
       <div class="card-title">📋 投稿済みエピソード一覧</div>
       <div class="episode-list" id="episodeList">
@@ -300,37 +95,51 @@
       </div>
     </div>
   </div>
-
   <div class="top-link">
     <a href="index.html">💌 ちぷAIとのチャットに戻る</a>
   </div>
 </div>
-
-<!-- トースト -->
 <div class="toast" id="toast"></div>
-
 <script>
   const GAS_URL = 'https://script.google.com/macros/s/AKfycbz8y8zqo4l-AxR2Jc-C7Wo6VmbDCF0sjt1yig5g8zEHgVMCGnU2GMdkq3ihZAXhWp3x/exec';
 
   const PERSONALITIES = {
+    cool_caring:    '低くてセクシーな声の持ち主。クールで落ち着いているが、ちぷのことをさりげなく気にかけてくれる。普段は多くを語らないが、ちぷが落ち込んでいるときだけ少し言葉が増える。',
     gentle_brother: '優しいお兄さん系。穏やかで温かく、ユーモアもある。ちぷのことを常に気にかけていて、いじられても傷ついていないか心配してくれる。',
-    cool_caring:    'クールで落ち着いているが、実はちぷのことをとても気にかけている。普段は淡々としているが、ちぷが落ち込んでいるときは優しい言葉をかけてくれる。',
     cheerful:       '明るくて元気。ちぷと一緒にいると楽しくなれる。いじられネタもポジティブに受け止めて笑いに変えてくれる。',
     reliable:       '頼りになる兄貴分。ちぷの相談に真剣に向き合ってくれる。時に厳しいことも言うが、根底にある優しさが伝わってくる。',
     custom:         '',
   };
-
   const TONES = {
+    cool_caring:    '短くシンプルだが温かみのある言葉遣い。「…そうか」「大丈夫だ」など落ち着いた語り口。',
     gentle_brother: '丁寧だけど堅すぎない、自然な話し方。「だよ」「ね」など柔らかい語尾を使う。',
-    cool_caring:    '短くシンプルな言葉。でも選ぶ言葉が温かい。',
     cheerful:       '明るくテンポが良い。感嘆詞を自然に使う。',
     reliable:       'はっきりしていて信頼感がある。でも威圧的でない。',
     custom:         '',
   };
 
-  // ============================================================
-  // 初期化
-  // ============================================================
+  // JSONP通信
+  function callGAS(params) {
+    return new Promise((resolve, reject) => {
+      const cbName = 'cb_' + Date.now();
+      const script = document.createElement('script');
+      params.callback = cbName;
+      const qs = new URLSearchParams(params).toString();
+      window[cbName] = (data) => {
+        delete window[cbName];
+        document.body.removeChild(script);
+        resolve(data);
+      };
+      script.onerror = () => {
+        delete window[cbName];
+        document.body.removeChild(script);
+        reject(new Error('JSONP error'));
+      };
+      script.src = `${GAS_URL}?${qs}`;
+      document.body.appendChild(script);
+    });
+  }
+
   window.onload = async () => {
     await loadCharSettings();
     await loadEpisodes();
@@ -338,25 +147,19 @@
 
   async function loadCharSettings() {
     try {
-      const res  = await fetch(`${GAS_URL}?action=getCharSettings`);
-      const data = await res.json();
+      const data = await callGAS({ action: 'getCharSettings' });
       if (data.name)        document.getElementById('charName').value        = data.name;
       if (data.personality) document.getElementById('charPersonality').value = data.personality;
       if (data.tone)        document.getElementById('charTone').value        = data.tone;
       if (data.extra)       document.getElementById('charExtra').value       = data.extra;
-    } catch (e) {
-      // GAS未設定時はデフォルト値でOK
-    }
+    } catch (e) {}
   }
 
   async function loadEpisodes() {
     try {
-      const res  = await fetch(`${GAS_URL}?action=getEpisodes`);
-      const data = await res.json();
+      const data = await callGAS({ action: 'getEpisodes' });
       renderEpisodes(data);
-    } catch (e) {
-      renderEpisodes([]);
-    }
+    } catch (e) { renderEpisodes([]); }
   }
 
   function renderEpisodes(episodes) {
@@ -366,16 +169,10 @@
       return;
     }
     list.innerHTML = episodes.map(ep => `
-      <div class="episode-item">
-        <span>📌</span>
-        <div>${escapeHtml(ep)}</div>
-      </div>
+      <div class="episode-item"><span>📌</span><div>${escapeHtml(ep)}</div></div>
     `).join('');
   }
 
-  // ============================================================
-  // タブ切り替え
-  // ============================================================
   function switchTab(tab) {
     document.querySelectorAll('.tab-btn').forEach((btn, i) => {
       btn.classList.toggle('active', (i === 0 && tab === 'char') || (i === 1 && tab === 'episode'));
@@ -384,9 +181,6 @@
     document.getElementById('tab-episode').className = 'tab-content' + (tab === 'episode' ? ' show' : '');
   }
 
-  // ============================================================
-  // 性格タイプ選択時
-  // ============================================================
   function updatePersonality() {
     const type = document.getElementById('charType').value;
     if (type !== 'custom') {
@@ -395,49 +189,28 @@
     }
   }
 
-  // ============================================================
-  // キャラ設定保存
-  // ============================================================
   async function saveCharSettings() {
-    const payload = {
+    const params = {
       action:      'saveCharSettings',
-      name:        document.getElementById('charName').value.trim()        || 'ハル',
-      personality: document.getElementById('charPersonality').value.trim() || '優しいお兄さん系',
-      tone:        document.getElementById('charTone').value.trim()        || '丁寧だけど堅すぎない話し方',
+      name:        document.getElementById('charName').value.trim()        || '津田健次郎',
+      personality: document.getElementById('charPersonality').value.trim() || '低くてセクシーな声の持ち主。',
+      tone:        document.getElementById('charTone').value.trim()        || '短くシンプルだが温かみのある言葉遣い。',
       extra:       document.getElementById('charExtra').value.trim(),
     };
     try {
-      const res  = await fetch(GAS_URL, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify(payload),
-      });
-      const data = await res.json();
-      if (data.success) {
-        showToast('✅ キャラ設定を保存しました！');
-      } else {
-        showToast('⚠️ 保存に失敗しました');
-      }
+      const data = await callGAS(params);
+      showToast(data.success ? '✅ キャラ設定を保存しました！' : '⚠️ 保存に失敗しました');
     } catch (e) {
       showToast('⚠️ 通信エラーが発生しました');
     }
   }
 
-  // ============================================================
-  // あるある投稿
-  // ============================================================
   async function postEpisode() {
     const episode  = document.getElementById('episodeText').value.trim();
     const postedBy = document.getElementById('posterName').value.trim() || '名無し';
     if (!episode) { showToast('⚠️ エピソードを入力してください'); return; }
-
     try {
-      const res  = await fetch(GAS_URL, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ action: 'postEpisode', episode, postedBy }),
-      });
-      const data = await res.json();
+      const data = await callGAS({ action: 'postEpisode', episode, postedBy });
       if (data.success) {
         document.getElementById('episodeText').value = '';
         showToast('✨ 投稿しました！ちぷAIが賢くなります');
@@ -450,9 +223,6 @@
     }
   }
 
-  // ============================================================
-  // ユーティリティ
-  // ============================================================
   function showToast(msg) {
     const toast = document.getElementById('toast');
     toast.textContent = msg;
@@ -461,9 +231,7 @@
   }
 
   function escapeHtml(str) {
-    return String(str)
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-      .replace(/"/g,'&quot;');
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 </script>
 </body>
