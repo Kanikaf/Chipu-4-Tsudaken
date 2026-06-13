@@ -462,12 +462,9 @@
     }
 
     try {
-      const res  = await fetch(GAS_URL, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ action: 'chat', message: text, senderName }),
-      });
-      const data = await res.json();
+      const params = new URLSearchParams({ action: 'chat', message: text, senderName });
+      const res    = await fetch(`${GAS_URL}?${params}`);
+      const data   = await res.json();
       if (data.reply) {
         addAiMessage(data.reply);
         if (data.charName) {
